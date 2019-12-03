@@ -20,21 +20,17 @@ import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
 class ProductBoTest {
-    @Mock
-    private ProductDao productDao;
-    @InjectMocks
+    private ProductDao productDao = new InMemoryProductDao();
+//    @Mock
+//    private ProductDao productDao;
+//    @InjectMocks
     private ProductBo bo;
     private Product product;
     private List<Product> products;
 
     @BeforeEach
     void dummyProductSetUp() {
-        product = new Product();
-        product.setId(7L);
-        product.setName("강정치킨");
-
-        products = new ArrayList<>();
-        products.add(product);
+        bo = new ProductBo(productDao);
     }
 
     @DisplayName("가격이 없는 새로운 제품을 추가하기")
@@ -66,10 +62,16 @@ class ProductBoTest {
     @DisplayName("제품 목록을 출력하기")
     @Test
     void getProductList() {
-        given(productDao.findAll()).willReturn(products);
+//        given(productDao.findAll()).willReturn(products);
+        final Product product1 = new Product();
+        product1.setId(1L);
+        product1.setName("꿀닭강정");
+        product1.setPrice(BigDecimal.valueOf(19000));
+
+        productDao.save(product1);
 
         List<Product> products = bo.list();
 
-        assertThat(products).containsExactly(product);
+        assertThat(products).containsExactly(product1);
     }
 }
