@@ -77,3 +77,83 @@
 | 제품 | Product | 치킨집에서 판매 하는 개별적인 품목. 가격과 이름을 가진다. |
 | 주문 테이블 | OrderTable | 주문을 할 수 있는 치킨집 내 테이블 이다. |
 | 주문 테이블 그룹 | OrderTableGroup | 두 개 이상의 주문 테이블로 이루어진 테이블 그룹이다. |
+
+## 모델링
+
+@startuml
+```uml
+
+class Menu {
+  Long id
+  String name
+  BigDecimal price
+  Long menuGroupId
+
+  void methods()
+  -field1
+  #field2
+  ~method1()
+  +method2()
+}
+
+class MenuProduct {
+  Long seq
+  Long menuId
+  Long productId
+  long quantity
+  
+  void method()
+}
+
+class MenuGroup {
+  Long id
+  String name
+
+}
+ 
+class Order {
+  Long id
+  Long orderTableId
+  String orderStatus
+  LocalDateTime orderTime
+  
+}
+
+class OderLineItem {
+  Long seq
+  Long orderId
+  Long menuId
+  long quantity
+
+}
+
+class OrderTable {
+  Long id
+  Long tableGroupId
+  int numberOfGuests
+  boolean empty
+
+}
+
+class Product {
+  Long id
+  String name
+  BigDecimal price
+
+}
+
+class TableGroup {
+  Long id
+  LocalDateTime createdDate
+  
+}
+
+class A
+class B
+class C
+
+A "1" o-- "1" B
+A "1" *-- "many" C
+
+```
+@enduml
